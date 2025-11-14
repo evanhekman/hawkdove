@@ -1,11 +1,27 @@
 import enum
 
+import numpy as np
+
 
 class Strategy(enum.Enum):
     HAWK = 0
     DOVE = 1
     BULLY = 2
     RETALIATOR = 3
+
+
+PAYOFF = np.array(
+    [
+        [-25, 50, 50, -25],
+        [0, 15, 0, 15],
+        [0, 50, 25, 0],
+        [-25, 15, 50, 15],
+    ]
+)
+
+
+def matrix_interaction(p1: np.ndarray, p2: np.ndarray):
+    return int(p1 @ PAYOFF @ p2), int(p2 @ PAYOFF @ p1)
 
 
 def interaction(strat1, strat2) -> tuple[int, int]:
@@ -84,5 +100,5 @@ def main():
         print("terminating")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
