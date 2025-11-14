@@ -5,24 +5,24 @@ D_STRAT = np.array([0, 1, 0, 0])
 B_STRAT = np.array([0, 0, 1, 0])
 R_STRAT = np.array([0, 0, 0, 1])
 
-# PAYOFF = np.array(
-#     [
-#         [-25, 50, 50, -25],
-#         [0, 15, 0, 15],
-#         [0, 50, 25, 0],
-#         [-25, 15, 50, 15],
-#     ]
-# )
-
-# modified matrix with nonnegative entries to simplify simulation logic
 PAYOFF = np.array(
     [
-        [0, 75, 75, 0],
-        [25, 40, 25, 40],
-        [25, 75, 50, 25],
-        [0, 40, 75, 40],
+        [-25, 50, 50, -25],
+        [0, 15, 0, 15],
+        [0, 50, 25, 0],
+        [-25, 15, 50, 15],
     ]
 )
+
+# modified matrix with nonnegative entries to simplify simulation logic
+# PAYOFF = np.array(
+#     [
+#         [0, 75, 75, 0],
+#         [25, 40, 25, 40],
+#         [25, 75, 50, 25],
+#         [0, 40, 75, 40],
+#     ]
+# )
 
 
 def interaction(p1: np.ndarray, p2: np.ndarray):
