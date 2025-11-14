@@ -1,27 +1,32 @@
-import enum
-
 import numpy as np
 
+H_STRAT = np.array([1, 0, 0, 0])
+D_STRAT = np.array([0, 1, 0, 0])
+B_STRAT = np.array([0, 0, 1, 0])
+R_STRAT = np.array([0, 0, 0, 1])
 
-class Strategy(enum.Enum):
-    HAWK = (1, 0, 0, 0)
-    DOVE = (0, 1, 0, 0)
-    BULLY = (0, 0, 1, 0)
-    RETALIATOR = (0, 0, 0, 1)
+# PAYOFF = np.array(
+#     [
+#         [-25, 50, 50, -25],
+#         [0, 15, 0, 15],
+#         [0, 50, 25, 0],
+#         [-25, 15, 50, 15],
+#     ]
+# )
 
-
+# modified matrix with nonnegative entries to simplify simulation logic
 PAYOFF = np.array(
     [
-        [-25, 50, 50, -25],
-        [0, 15, 0, 15],
-        [0, 50, 25, 0],
-        [-25, 15, 50, 15],
+        [0, 75, 75, 0],
+        [25, 40, 25, 40],
+        [25, 75, 50, 25],
+        [0, 40, 75, 40],
     ]
 )
 
 
 def interaction(p1: np.ndarray, p2: np.ndarray):
-    return float(p1 @ PAYOFF @ p2), float(p2 @ PAYOFF @ p1)
+    return float(p1 @ PAYOFF @ p2)
 
 
 def main():
@@ -31,21 +36,28 @@ def main():
         player2 = 0
         while True:
             print("HAWK - 0, DOVE - 1, BULLY - 2, RETALIATOR - 3")
+
+            # player 1
             print("player 1 select strategy: ")
-            index1 = int(input())
             arr1 = [0] * 4
-            arr1[index1] = 1
+            arr1[int(input())] = 1
             strat1 = np.array(arr1)
+
+            # player 2
             print("player 2 select strategy: ")
-            index2 = int(input())
             arr2 = [0] * 4
-            arr2[index2] = 1
+            arr2[int(input())] = 1
             strat2 = np.array(arr2)
-            r1, r2 = interaction(strat1, strat2)
-            player1 += r1
-            player2 += r2
-            print(f"Round {i}: Player 1 has {player1}, Player 2 has {player2}")
+
+            # rewards
+            reward1, reward2 = interaction(strat1, strat2), interaction(strat2, strat1)
+            player1 += reward1
+            player2 += reward2
+            print(
+                f"Round {i}: Player 1 has {player1 - reward1} -> {player1}, Player 2 has {player2 - reward2} -> {player2}"
+            )
             i += 1
+
     except KeyboardInterrupt:
         print("terminating")
 
