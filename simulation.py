@@ -26,25 +26,17 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
         # fitness is how well each strategy does against the overall population
         fitness = np.array(
             [
-                hawkdove.interaction(hawkdove.H_STRAT, population),
-                hawkdove.interaction(hawkdove.D_STRAT, population),
-                hawkdove.interaction(hawkdove.B_STRAT, population),
-                hawkdove.interaction(hawkdove.R_STRAT, population),
+                hawkdove.interaction(hawkdove.HAWK, population),
+                hawkdove.interaction(hawkdove.DOVE, population),
+                hawkdove.interaction(hawkdove.BULL, population),
+                hawkdove.interaction(hawkdove.RETA, population),
             ]
         )
-        fitness /= sum(fitness)
-        avg_fitness = sum(fitness) / len(fitness)
-        print("fitness", fitness, sum(fitness), avg_fitness)
-        # h_change = population[0] * (h_fitness - avg_fitness)
-        # d_change = population[1] * (d_fitness - avg_fitness)
-        # b_change = population[2] * (b_fitness - avg_fitness)
-        # r_change = population[3] * (r_fitness - avg_fitness)
-        diff = fitness - avg_fitness
-        print("diff", diff, sum(diff))
-        population = population + population * diff
-        population = population / sum(population)
-        print("population", population, sum(population))
-        populations.append(population)
+        print(fitness)
+        avg_fitness = hawkdove.interaction(population, population)
+        print(avg_fitness)
+        population = population * (fitness - avg_fitness)
+        print(population)
 
         # make sure we don't drift away from floating point errors
         assert math.isclose(sum(population), 1, abs_tol=0.01)

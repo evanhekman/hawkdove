@@ -1,9 +1,9 @@
 import numpy as np
 
-H_STRAT = np.array([1, 0, 0, 0])
-D_STRAT = np.array([0, 1, 0, 0])
-B_STRAT = np.array([0, 0, 1, 0])
-R_STRAT = np.array([0, 0, 0, 1])
+HAWK = np.array([1, 0, 0, 0])
+DOVE = np.array([0, 1, 0, 0])
+BULL = np.array([0, 0, 1, 0])
+RETA = np.array([0, 0, 0, 1])
 
 PAYOFF = np.array(
     [
