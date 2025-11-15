@@ -164,3 +164,9 @@ class TestDirection(unittest.TestCase):
         Make sure that retaliator outcompetes in favorable populations.
         """
         ...
+
+
+print(hawkdove.interaction(hawkdove.HAWK, MORE_RETALIATOR))
+print(hawkdove.interaction(hawkdove.DOVE, MORE_RETALIATOR))
+print(hawkdove.interaction(hawkdove.BULL, MORE_RETALIATOR))
+print(hawkdove.interaction(hawkdove.RETA, MORE_RETALIATOR))

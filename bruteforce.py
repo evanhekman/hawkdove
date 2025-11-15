@@ -3,8 +3,9 @@ import random
 import numpy as np
 
 import hawkdove
+import simulation
 
-letters = ["H", "D", "B", "R"]
+letters = ["H", "D", "B", "R", "P"]
 
 
 def classify_distribution(strats: list):
@@ -37,7 +38,7 @@ def random_100() -> list[float]:
     return [cuts[0], cuts[1] - cuts[0], cuts[2] - cuts[1], 100 - cuts[2]]
 
 
-def main():
+def calculate_fraction_winners():
     winners = {
         "H": 0,
         "D": 0,
@@ -69,6 +70,45 @@ def main():
         round(winners["R"] / iterations * 100, 2),
         " % of encounters",
     )
+
+
+def main():
+    # hawk = float(input())
+    # dove = float(input())
+    # bull = float(input())
+    # reta = float(input())
+    hawk = 0.25
+    dove = 0.25
+    bull = 0.25
+    reta = 0.25
+    population = np.array([hawk, dove, bull, reta])
+    populations = [population]
+    try:
+        while True:
+            input()
+            fitness = np.array(
+                [
+                    hawkdove.interaction(hawkdove.HAWK, population),
+                    hawkdove.interaction(hawkdove.DOVE, population),
+                    hawkdove.interaction(hawkdove.BULL, population),
+                    hawkdove.interaction(hawkdove.RETA, population),
+                ]
+            )
+            avg_fitness = sum(fitness) / len(fitness)
+            change = (fitness - avg_fitness) / avg_fitness
+            population = np.array([x + random.random() * 0.01 for x in population])
+            population = np.clip(population + 0.01 * change, 0.01, 0.97)
+            population = population / sum(population)
+            populations.append(population)
+
+            print("fitness\t\t", fitness)
+            print("avg_fitness\t", avg_fitness)
+            print("change\t\t", change)
+            print("population\t", population)
+
+    except KeyboardInterrupt:
+        print("terminating")
+        simulation.matplotlib_bs(hawk, dove, bull, reta, populations)
 
 
 main()

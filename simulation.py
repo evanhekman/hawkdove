@@ -1,5 +1,6 @@
 # python imports
 import math
+import random
 
 # external imports
 import click
@@ -23,7 +24,8 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
     populations = []
 
     for i in range(iterations):
-        # fitness is how well each strategy does against the overall population
+        # as described here:
+        # https://en.wikipedia.org/wiki/Replicator_equation#:~:text=%5B4%5D-,Discrete,-replicator%20equation%5B
         fitness = np.array(
             [
                 hawkdove.interaction(hawkdove.HAWK, population),
@@ -32,11 +34,12 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
                 hawkdove.interaction(hawkdove.RETA, population),
             ]
         )
-        print(fitness)
-        avg_fitness = hawkdove.interaction(population, population)
-        print(avg_fitness)
-        population = population * (fitness - avg_fitness)
-        print(population)
+        avg_fitness = sum(fitness) / len(fitness)
+        change = (fitness - avg_fitness) / avg_fitness
+        population = np.array([x + random.random() * 0.01 for x in population])
+        population = np.clip(population + 0.01 * change, 0.01, 0.97)
+        population = population / sum(population)
+        populations.append(population)
 
         # make sure we don't drift away from floating point errors
         assert math.isclose(sum(population), 1, abs_tol=0.01)
