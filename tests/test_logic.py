@@ -31,7 +31,7 @@ class TestLogic(unittest.TestCase):
         assert hawkdove.interaction(hawkdove.BULL, hawkdove.BULL) == 25
         assert hawkdove.interaction(hawkdove.BULL, hawkdove.RETA) == 0
 
-    def test_rascal(self):
+    def test_retaliator(self):
         assert hawkdove.interaction(hawkdove.RETA, hawkdove.HAWK) == -25
         assert hawkdove.interaction(hawkdove.RETA, hawkdove.DOVE) == 15
         assert hawkdove.interaction(hawkdove.RETA, hawkdove.BULL) == 50

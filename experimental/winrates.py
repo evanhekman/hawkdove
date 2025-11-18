@@ -1,9 +1,12 @@
+"""
+This file contains code to estimate which strategy wins more (across random distributions).
+"""
+
 import random
 
 import numpy as np
 
 import hawkdove
-import simulation
 
 letters = ["H", "D", "B", "R", "P"]
 
@@ -49,6 +52,7 @@ def calculate_fraction_winners():
     iterations = 100000
     for i in range(iterations):
         dist = random_100()
+        print(dist)
         random.shuffle(dist)
         assert sum(dist) == 100
         population = np.array([d / 100.0 for d in dist])
@@ -111,4 +115,5 @@ def main():
         simulation.matplotlib_bs(hawk, dove, bull, reta, populations)
 
 
-main()
+# main()
+calculate_fraction_winners()
