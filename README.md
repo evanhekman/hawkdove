@@ -1,7 +1,11 @@
 # Hawk Dove
 
 ### Overview
-For Complex Systems 511 (Theory of Complex Systems) at the University of Michigan final project. This repository contains 
+For Complex Systems 511 (Theory of Complex Systems) at the University of Michigan final project. This repository contains code to play around with and simulate the game of hawk-dove, informally described in terms of the four available strategies:
+- Hawks: Always attack, fighting for maximal reward.
+- Doves: Peacefully coexist, run away if attacked.
+- Bullies: Attack at first, but retreat if challenged.
+- Retaliators: Peacefully coexist, but fight back if attacked.
 
 ### Setup
 > Create a python virual environment and install the editable hawkdove module. Commands:
