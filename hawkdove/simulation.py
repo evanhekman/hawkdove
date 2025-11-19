@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # local imports
-import hawkdove
+import game
 
 
 def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
@@ -28,10 +28,10 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
         # https://en.wikipedia.org/wiki/Replicator_equation#:~:text=%5B4%5D-,Discrete,-replicator%20equation%5B
         fitness = np.array(
             [
-                hawkdove.interaction(hawkdove.HAWK, population),
-                hawkdove.interaction(hawkdove.DOVE, population),
-                hawkdove.interaction(hawkdove.BULL, population),
-                hawkdove.interaction(hawkdove.RETA, population),
+                game.interaction(game.HAWK, population),
+                game.interaction(game.DOVE, population),
+                game.interaction(game.BULL, population),
+                game.interaction(game.RETA, population),
             ]
         )
         avg_fitness = sum(fitness) / len(fitness)

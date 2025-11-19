@@ -5,13 +5,6 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hawkdove"
 version = "0.1.0"
-description = "hawk-dove-bully-retaliator simulation for CMPLXSYS 511"
-requires-python = ">=3.8"
-dependencies = [
-    "numpy",
-]
 
-[project.optional-dependencies]
-dev = [
-    "pytest",
-]
+[tool.setuptools]
+packages = ["hawkdove"]

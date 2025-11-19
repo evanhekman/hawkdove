@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-import hawkdove
+import hawkdove.core as hawkdove
 
 UNIFORM = np.array([0.25, 0.25, 0.25, 0.25])
 MORE_HAWK = np.array([0.70, 0.10, 0.10, 0.10])
@@ -166,7 +166,5 @@ class TestDirection(unittest.TestCase):
         ...
 
 
-print(hawkdove.interaction(hawkdove.HAWK, MORE_RETALIATOR))
-print(hawkdove.interaction(hawkdove.DOVE, MORE_RETALIATOR))
-print(hawkdove.interaction(hawkdove.BULL, MORE_RETALIATOR))
-print(hawkdove.interaction(hawkdove.RETA, MORE_RETALIATOR))
+if __name__ == "__main__":
+    unittest.main()
