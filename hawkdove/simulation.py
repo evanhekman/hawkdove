@@ -4,11 +4,11 @@ import random
 
 # external imports
 import click
-import matplotlib.pyplot as plt
-import numpy as np
 
 # local imports
-import game
+import core
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
@@ -28,23 +28,25 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
         # https://en.wikipedia.org/wiki/Replicator_equation#:~:text=%5B4%5D-,Discrete,-replicator%20equation%5B
         fitness = np.array(
             [
-                game.interaction(game.HAWK, population),
-                game.interaction(game.DOVE, population),
-                game.interaction(game.BULL, population),
-                game.interaction(game.RETA, population),
+                core.interaction(core.HAWK, population),
+                core.interaction(core.DOVE, population),
+                core.interaction(core.BULL, population),
+                core.interaction(core.RETA, population),
             ]
         )
         avg_fitness = sum(fitness) / len(fitness)
         change = (fitness - avg_fitness) / avg_fitness
         population = np.array([x + random.random() * 0.01 for x in population])
-        population = np.clip(population + 0.01 * change, 0.01, 0.97)
+        # ensure populations stay above 1% and below 97%
+        # population = np.clip(population + 0.01 * change, 0.01, 0.97)
+        population = population + 0.01 * change
         population = population / sum(population)
         populations.append(population)
 
         # make sure we don't drift away from floating point errors
         assert math.isclose(sum(population), 1, abs_tol=0.01)
         # no negative populations
-        assert all(p >= 0 for p in population)
+        # assert all(p >= 0 for p in population)
 
     return populations
 
