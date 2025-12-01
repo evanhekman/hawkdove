@@ -5,6 +5,7 @@ This file contains code to estimate how often each strategy wins across random d
 """
 
 import random
+import sys
 
 import numpy as np
 
@@ -55,6 +56,12 @@ def calculate_fraction_winners():
     iterations = 1000000
     print(f"testing {iterations} random populations...")
     for i in range(iterations):
+        if i % (iterations // 100) == 0:
+            if i % (iterations // 10) == 0:
+                sys.stdout.write(f"{int(i / (iterations // 100))}%")
+            else:
+                sys.stdout.write(".")
+            sys.stdout.flush()
         dist = random_100()
         population = np.array([d / 100.0 for d in dist])
         results = [
@@ -66,6 +73,9 @@ def calculate_fraction_winners():
         assert results[0] != results[1]  # this code isn't designed to handle ties
         winner = classify_distribution(results)[0]
         winners[winner] += 1
+    sys.stdout.write("100%")
+    sys.stdout.flush()
+    print()
     print("hawk wins ", round(winners["H"] / iterations * 100, 2), " % of encounters")
     print("dove wins ", round(winners["D"] / iterations * 100, 2), " % of encounters")
     print("bully wins ", round(winners["B"] / iterations * 100, 2), " % of encounters")
