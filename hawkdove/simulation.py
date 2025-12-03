@@ -58,7 +58,7 @@ def simulate(
             )
 
         # apply change based on who is doing well
-        population = population + 0.01 * change
+        population = population * (1 + 0.01 * change)
         population = population / sum(population)
         # make sure we don't drift away from floating point errors
         assert math.isclose(sum(population), 1, abs_tol=0.01)
