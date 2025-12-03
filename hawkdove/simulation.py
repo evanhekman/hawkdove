@@ -36,10 +36,11 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
         )
         avg_fitness = sum(fitness) / len(fitness)
         change = (fitness - avg_fitness) / avg_fitness
-        population = np.array([x + random.random() * 0.01 for x in population])
+        population = np.array([x + random.random() * 0.003 for x in population])
         # ensure populations stay above 1% and below 97%
         # population = np.clip(population + 0.01 * change, 0.01, 0.97)
-        population = population + 0.01 * change
+        population = np.clip(population + 0.01 * change, 0, 1)
+        # population = population + 0.01 * change
         population = population / sum(population)
         populations.append(population)
 
@@ -90,7 +91,7 @@ def matplotlib_bs(
 @click.option("--graph", "-g", type=bool, default=True)
 def main(hawk, dove, bully, retaliator, iterations, graph):
     pops = simulate(hawk, dove, bully, retaliator, iterations)
-    # print("final values: ", pops[-1])
+    print("final values: ", pops[-1])
     if graph:
         matplotlib_bs(hawk, dove, bully, retaliator, pops)
 
