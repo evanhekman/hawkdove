@@ -1,6 +1,7 @@
 # python imports
 import math
 import random
+from asyncio import SelectorEventLoop
 
 # external imports
 import click
@@ -113,6 +114,20 @@ def matplotlib_bs(
 @click.option("--bounds", type=bool, default=True)
 @click.option("--graph", "-g", type=bool, default=True)
 def main(hawk, dove, bully, retaliator, iterations, noise, bounds, graph):
+    if sum([hawk, dove, bully, retaliator]) != 1:
+        s = sum([hawk, dove, bully, retaliator])
+        hawk /= s
+        dove /= s
+        bully /= s
+        retaliator /= s
+        print(
+            "Automatically normalized starting populations:",
+            hawk,
+            dove,
+            bully,
+            retaliator,
+        )
+
     pops = simulate(hawk, dove, bully, retaliator, iterations, noise, bounds)
     print("final values: ", pops[-1])
     if graph:
