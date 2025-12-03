@@ -15,7 +15,7 @@ PAYOFF = np.array(
 )
 
 # modified matrix with nonnegative entries to simplify simulation logic
-MODIFIED_PAYOFF = PAYOFF + 50
+MODIFIED_PAYOFF = PAYOFF + 25
 
 
 def interaction(p1: np.ndarray, p2: np.ndarray):

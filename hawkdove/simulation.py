@@ -11,9 +11,24 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
+def simulate(
+    h_pop: float,
+    d_pop: float,
+    b_pop: float,
+    r_pop: float,
+    iterations: int,
+    noise: float = 0,
+    bounds: bool = True,
+):
     """
     Runs a simulation based on the given starting populations.
+        h_pop: starting hawk population
+        d_pop: starting dove population
+        b_pop: starting bully population
+        r_pop: starting retaliator population
+        iterations: how many iterations to run
+        noise: maximum change resulting from noise
+        bounds: whether to clamp populations in the [0, 1] range
     """
     population = np.array([h_pop, d_pop, b_pop, r_pop])
     if not math.isclose(sum(population), 1):
@@ -36,18 +51,24 @@ def simulate(h_pop, d_pop, b_pop, r_pop, iterations):
         )
         avg_fitness = sum(fitness) / len(fitness)
         change = (fitness - avg_fitness) / avg_fitness
-        population = np.array([x + random.random() * 0.003 for x in population])
-        # ensure populations stay above 1% and below 97%
-        # population = np.clip(population + 0.01 * change, 0.01, 0.97)
-        population = np.clip(population + 0.01 * change, 0, 1)
-        # population = population + 0.01 * change
-        population = population / sum(population)
-        populations.append(population)
 
+        if noise != 0:
+            population = np.array(
+                [x + (random.random() - 0.5) * noise for x in population]
+            )
+
+        # apply change based on who is doing well
+        population = population + 0.01 * change
+        population = population / sum(population)
         # make sure we don't drift away from floating point errors
         assert math.isclose(sum(population), 1, abs_tol=0.01)
-        # no negative populations
-        # assert all(p >= 0 for p in population)
+
+        if bounds:
+            population = np.clip(population, 0, 1)
+            # no negative populations
+            assert all(p >= 0 for p in population)
+
+        populations.append(population)
 
     return populations
 
@@ -88,9 +109,11 @@ def matplotlib_bs(
     "--retaliator", "--retaliator-pop", "--r-pop", "-r", type=float, required=True
 )
 @click.option("--iterations", "-i", type=int, required=True)
+@click.option("--noise", type=float, default=0)
+@click.option("--bounds", type=bool, default=True)
 @click.option("--graph", "-g", type=bool, default=True)
-def main(hawk, dove, bully, retaliator, iterations, graph):
-    pops = simulate(hawk, dove, bully, retaliator, iterations)
+def main(hawk, dove, bully, retaliator, iterations, noise, bounds, graph):
+    pops = simulate(hawk, dove, bully, retaliator, iterations, noise, bounds)
     print("final values: ", pops[-1])
     if graph:
         matplotlib_bs(hawk, dove, bully, retaliator, pops)
