@@ -1,7 +1,6 @@
 # python imports
 import math
 import random
-from asyncio import SelectorEventLoop
 
 # external imports
 import click
@@ -10,6 +9,9 @@ import click
 import core
 import matplotlib.pyplot as plt
 import numpy as np
+
+# constant value introduced into replicator equation to mimic continuity
+LEARNING_RATE = 0.01
 
 
 def simulate(
@@ -20,7 +22,7 @@ def simulate(
     iterations: int,
     noise: float = 0,
     bounds: bool = True,
-):
+) -> list[list[float]]:
     """
     Runs a simulation based on the given starting populations.
         h_pop: starting hawk population
@@ -36,7 +38,6 @@ def simulate(
         print("Starting population should sum to 1.0")
         exit(1)
 
-    # populations = [population]
     populations = []
 
     for i in range(iterations):
@@ -50,7 +51,7 @@ def simulate(
                 core.interaction(core.RETA, population),
             ]
         )
-        avg_fitness = sum(fitness) / len(fitness)
+        avg_fitness = np.mean(fitness)
         change = (fitness - avg_fitness) / avg_fitness
 
         if noise != 0:
@@ -59,10 +60,10 @@ def simulate(
             )
 
         # apply change based on who is doing well
-        population = population * (1 + 0.01 * change)
+        population = population * (1 + LEARNING_RATE * change)
         population = population / sum(population)
         # make sure we don't drift away from floating point errors
-        assert math.isclose(sum(population), 1, abs_tol=0.01)
+        assert math.isclose(sum(population), 1, abs_tol=0.001)
 
         if bounds:
             population = np.clip(population, 0, 1)
