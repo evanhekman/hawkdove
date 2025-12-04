@@ -15,7 +15,19 @@ PAYOFF = np.array(
 )
 
 # modified matrix with nonnegative entries to simplify simulation logic
-MODIFIED_PAYOFF = PAYOFF + 25
+# MODIFIED_PAYOFF = PAYOFF + 25
+
+b = 50
+c = 25
+
+MODIFIED_PAYOFF = np.array(
+    [
+        [(b - c) / 2, b, b, (b - c) / 2],
+        [0, b / 2, 0, b / 2],
+        [0, b, b / 2, 0],
+        [(b - c) / 2, b / 2, b, b / 2],
+    ]
+)
 
 
 def interaction(p1: np.ndarray, p2: np.ndarray):
