@@ -5,34 +5,23 @@ DOVE = np.array([0, 1, 0, 0])
 BULL = np.array([0, 0, 1, 0])
 RETA = np.array([0, 0, 0, 1])
 
-PAYOFF = np.array(
-    [
-        [-25, 50, 50, -25],  # hawk
-        [0, 15, 0, 15],  # dove
-        [0, 50, 25, 0],  # bully
-        [-25, 15, 50, 15],  # retaliator
-    ]
-)
 
-# modified matrix with nonnegative entries to simplify simulation logic
-# MODIFIED_PAYOFF = PAYOFF + 25
-
-c = 1
-b = 1
-
-MODIFIED_PAYOFF = np.array(
-    [
-        [(b - c) / 2, b, b, (b - c) / 2],
-        [0, b / 2, 0, b / 2],
-        [0, b, b / 2, 0],
-        [(b - c) / 2, b / 2, b, b / 2],
-    ]
-)
+def generate_matrix(benefit, cost):
+    return np.array(
+        [
+            [(benefit - cost) / 2, benefit, benefit, (benefit - cost) / 2],
+            [0, benefit / 2, 0, benefit / 2],
+            [0, benefit, benefit / 2, 0],
+            [(benefit - cost) / 2, benefit / 2, benefit, benefit / 2],
+        ]
+    )
 
 
-def interaction(p1: np.ndarray, p2: np.ndarray):
-    # return float(p1 @ PAYOFF @ p2)
-    return float(p1 @ MODIFIED_PAYOFF @ p2)
+DEFAULT_PAYOFF = generate_matrix(benefit=1, cost=0)
+
+
+def interaction(p1: np.ndarray, p2: np.ndarray, matrix=DEFAULT_PAYOFF):
+    return float(p1 @ matrix @ p2)
 
 
 def main():
