@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # constant value introduced into replicator equation to mimic continuity
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.1
 
 
 def simulate(
@@ -52,7 +52,7 @@ def simulate(
             ]
         )
         avg_fitness = np.mean(fitness)
-        change = (fitness - avg_fitness) / avg_fitness
+        change = fitness - avg_fitness
 
         if noise != 0:
             population = np.array(
@@ -75,9 +75,7 @@ def simulate(
     return populations
 
 
-def matplotlib_bs(
-    hawk: float, dove: float, bully: float, retaliator: float, pops, title
-):
+def matplotlib_bs(pops, title):
     """
     All the matplotlib boilerplate...
     Themes from presentation: #092f53, #e2e2e2
@@ -151,7 +149,7 @@ def main(hawk, dove, bully, retaliator, iterations, noise, title, bounds, graph)
     pops = simulate(hawk, dove, bully, retaliator, iterations, noise, bounds)
     print("final values: ", pops[-1])
     if graph:
-        matplotlib_bs(hawk, dove, bully, retaliator, pops, title)
+        matplotlib_bs(pops, title)
 
 
 if __name__ == "__main__":
