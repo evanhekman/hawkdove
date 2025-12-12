@@ -17,8 +17,8 @@ PAYOFF = np.array(
 # modified matrix with nonnegative entries to simplify simulation logic
 # MODIFIED_PAYOFF = PAYOFF + 25
 
-b = 50
-c = 25
+c = 10
+b = 4
 
 MODIFIED_PAYOFF = np.array(
     [

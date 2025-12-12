@@ -76,10 +76,11 @@ def simulate(
 
 
 def matplotlib_bs(
-    hawk: float, dove: float, bully: float, retaliator: float, pops: list[np.ndarray]
+    hawk: float, dove: float, bully: float, retaliator: float, pops, title
 ):
     """
     All the matplotlib boilerplate...
+    Themes from presentation: #092f53, #e2e2e2
     """
     pops_array = np.array(pops)
     hawks = pops_array[:, 0]
@@ -88,16 +89,33 @@ def matplotlib_bs(
     retaliators = pops_array[:, 3]
     time_steps = range(len(pops))
 
-    plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(12, 8), facecolor="#e2e2e2")
     plt.plot(time_steps, hawks, label="Hawk", linewidth=2)
     plt.plot(time_steps, doves, label="Dove", linewidth=2)
     plt.plot(time_steps, bullies, label="Bully", linewidth=2)
     plt.plot(time_steps, retaliators, label="Retaliator", linewidth=2)
 
-    plt.xlabel("Iteration")
-    plt.ylabel("Population(s)")
-    plt.title(f"Hawk-Dove-Bully-Retaliator ({hawk}, {dove}, {bully}, {retaliator})")
-    plt.legend()
+    ax = plt.gca()
+    ax.set_facecolor("#e2e2e2")
+    for spine in ax.spines.values():
+        spine.set_color("#092f53")
+        spine.set_linewidth(1.5)
+    ax.spines["top"].set_visible(True)
+    ax.spines["right"].set_visible(True)
+    plt.xlabel("Iteration", color="#092f53", fontsize=20)
+    plt.ylabel("Population(s)", color="#092f53", fontsize=20)
+    plt.title(title, color="#092f53", fontsize=32)
+    ax.tick_params(labelsize=16)
+    ax.legend(
+        bbox_to_anchor=(1.05, 1),
+        loc="upper left",
+        labelcolor="#092f53",
+        fontsize=12,
+        frameon=True,
+        edgecolor="#092f53",
+        facecolor="#e2e2e2",
+        fancybox=False,
+    )
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
@@ -111,10 +129,11 @@ def matplotlib_bs(
     "--retaliator", "--retaliator-pop", "--r-pop", "-r", type=float, required=True
 )
 @click.option("--iterations", "-i", type=int, required=True)
+@click.option("--title", "-t", type=str, default="")
 @click.option("--noise", type=float, default=0)
 @click.option("--bounds", type=bool, default=True)
 @click.option("--graph", "-g", type=bool, default=True)
-def main(hawk, dove, bully, retaliator, iterations, noise, bounds, graph):
+def main(hawk, dove, bully, retaliator, iterations, noise, title, bounds, graph):
     if sum([hawk, dove, bully, retaliator]) != 1:
         s = sum([hawk, dove, bully, retaliator])
         hawk /= s
@@ -132,7 +151,7 @@ def main(hawk, dove, bully, retaliator, iterations, noise, bounds, graph):
     pops = simulate(hawk, dove, bully, retaliator, iterations, noise, bounds)
     print("final values: ", pops[-1])
     if graph:
-        matplotlib_bs(hawk, dove, bully, retaliator, pops)
+        matplotlib_bs(hawk, dove, bully, retaliator, pops, title)
 
 
 if __name__ == "__main__":
