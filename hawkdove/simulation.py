@@ -89,7 +89,7 @@ def matplotlib_bs(
     retaliators = pops_array[:, 3]
     time_steps = range(len(pops))
 
-    fig = plt.figure(figsize=(12, 8), facecolor="#e2e2e2")
+    plt.figure(figsize=(12, 8), facecolor="#e2e2e2")
     plt.plot(time_steps, hawks, label="Hawk", linewidth=2)
     plt.plot(time_steps, doves, label="Dove", linewidth=2)
     plt.plot(time_steps, bullies, label="Bully", linewidth=2)
