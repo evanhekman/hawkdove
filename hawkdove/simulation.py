@@ -13,6 +13,10 @@ import numpy as np
 # constant value introduced into replicator equation to mimic continuity
 LEARNING_RATE = 0.1
 
+# color theme constants (from presentation)
+COLOR_PRIMARY = "#092f53"  # dark blue - text, borders, edges
+COLOR_BACKGROUND = "#e2e2e2"  # light gray - backgrounds
+
 
 def simulate(
     h_pop: float,
@@ -87,7 +91,7 @@ def matplotlib_bs(pops, title):
     retaliators = pops_array[:, 3]
     time_steps = range(len(pops))
 
-    plt.figure(figsize=(12, 8), facecolor="#e2e2e2")
+    plt.figure(figsize=(12, 8), facecolor=COLOR_BACKGROUND)
     plt.plot(time_steps, hawks, label="Hawk", linewidth=2)
     plt.plot(time_steps, doves, label="Dove", linewidth=2)
     plt.plot(time_steps, bullies, label="Bully", linewidth=2)

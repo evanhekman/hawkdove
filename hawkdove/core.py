@@ -17,7 +17,7 @@ def generate_matrix(benefit, cost):
     )
 
 
-DEFAULT_PAYOFF = generate_matrix(benefit=1, cost=1)
+DEFAULT_PAYOFF = generate_matrix(benefit=1, cost=3)
 
 
 def interaction(p1: np.ndarray, p2: np.ndarray, matrix=DEFAULT_PAYOFF):
