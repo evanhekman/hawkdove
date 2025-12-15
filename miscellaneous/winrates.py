@@ -72,7 +72,7 @@ def calculate_fraction_winners():
         "B": 0,
         "R": 0,
     }
-    iterations = 1000
+    iterations = 100000
     dists = []
     print(f"testing {iterations} random populations...")
     for i in range(iterations):
@@ -117,10 +117,10 @@ def calculate_fraction_winners():
             assert math.isclose(sum(pop), 1, abs_tol=0.001)
             assert all(p >= 0 for p in pop)
 
-        if i % 100 == 0:
-            print()
-            print(og_pop, i, pop, cost, benefit)
-            print()
+        # if i % 100 == 0:
+        #     print()
+        #     print(og_pop, i, pop, cost, benefit)
+        #     print()
         winner = get_winner(list(pop))[0]
         for p in range(len(pop)):
             if pop[p] > 0.01:

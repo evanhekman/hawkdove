@@ -10,10 +10,10 @@ For Complex Systems 511 (Theory of Complex Systems) at the University of Michiga
 ### Setup
 > Create a python virual environment and install the editable hawkdove module. Commands:
 - `python -m venv venv` (this creates a virtual environment)
-- `pip install requirements.txt` (this installs dependencies)
+- `pip install -r requirements.txt` (this installs dependencies)
 - `pip install -e .` (this installs the hawkdove module in editable mode)
 - `python -m pytest tests/unit_tests.py` or just `python tests/unit_tests.py` to check everything.
-- `python simulation.py -h 0.75 -d 0.25 -b 0 -r 0 -i 5000 -t "Plot Title"` to run the code. Change command line arguments to generate different scenarios.
+- `python hawkdove/simulation.py -h 0.75 -d 0.25 -b 0 -r 0 -i 5000 -t "Plot Title"` to run the code. Change command line arguments to generate different scenarios.
 
 ### Structure
 - hawkdove/
