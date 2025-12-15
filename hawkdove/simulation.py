@@ -14,8 +14,8 @@ import numpy as np
 LEARNING_RATE = 0.1
 
 # color theme constants (from presentation)
-COLOR_PRIMARY = "#092f53"  # dark blue - text, borders, edges
-COLOR_BACKGROUND = "#e2e2e2"  # light gray - backgrounds
+COLOR_PRIMARY = "#000000"
+COLOR_BACKGROUND = "#ffffff"
 
 
 def simulate(
@@ -98,24 +98,24 @@ def matplotlib_bs(pops, title):
     plt.plot(time_steps, retaliators, label="Retaliator", linewidth=2)
 
     ax = plt.gca()
-    ax.set_facecolor("#e2e2e2")
+    ax.set_facecolor(COLOR_BACKGROUND)
     for spine in ax.spines.values():
-        spine.set_color("#092f53")
+        spine.set_color(COLOR_PRIMARY)
         spine.set_linewidth(1.5)
     ax.spines["top"].set_visible(True)
     ax.spines["right"].set_visible(True)
-    plt.xlabel("Iteration", color="#092f53", fontsize=20)
-    plt.ylabel("Population(s)", color="#092f53", fontsize=20)
-    plt.title(title, color="#092f53", fontsize=32)
+    plt.xlabel("Iteration", color=COLOR_PRIMARY, fontsize=20)
+    plt.ylabel("Population(s)", color=COLOR_PRIMARY, fontsize=20)
+    plt.title(title, color=COLOR_PRIMARY, fontsize=32)
     ax.tick_params(labelsize=16)
     ax.legend(
         bbox_to_anchor=(1.05, 1),
         loc="upper left",
-        labelcolor="#092f53",
+        labelcolor=COLOR_PRIMARY,
         fontsize=12,
         frameon=True,
-        edgecolor="#092f53",
-        facecolor="#e2e2e2",
+        edgecolor=COLOR_PRIMARY,
+        facecolor=COLOR_BACKGROUND,
         fancybox=False,
     )
     plt.grid(True, alpha=0.3)
